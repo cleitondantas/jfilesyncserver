@@ -131,7 +131,7 @@ public class ApiController {
     }
 
     @DeleteMapping("/pathdelete")
-    public ResponseEntity<String> pathDelete(@RequestBody PathSearch pathSearch)  {
+    public ResponseEntity<String> pathDelete(@RequestBody PathSearch pathSearch) {
         String path = pathSearch.getPath();
         try {
             fileManagerService.pathDelete(path);
