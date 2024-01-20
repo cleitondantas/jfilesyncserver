@@ -39,8 +39,8 @@ public class SmbIntegrationConfig {
     @Value("${smb.share-and-dir}")
     private String smbShareAndDir;
 
-    @Value("${smb.remote-target-directory}")
-    private String smbRemoteTargetDirectory;
+//    @Value("${smb.remote-target-directory}")
+//    private String smbRemoteTargetDirectory;
 
     @Bean
     public MessageChannel smbOutputChannel() {

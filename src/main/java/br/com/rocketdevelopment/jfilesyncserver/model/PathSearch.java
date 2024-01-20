@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class PathSearch {
+public class PathSearch extends FileItem{
     private String path;
     private String filename;
     private String extension;

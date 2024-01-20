@@ -1,25 +1,27 @@
 package br.com.rocketdevelopment.jfilesyncserver.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.Message;
+import org.springframework.integration.smb.session.SmbSession;
+import org.springframework.integration.smb.session.SmbSessionFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.*;
+import java.nio.file.*;
 
 @Service
 public class SmbService {
 
+
     @Autowired
-    private MessageChannel smbOutputChannel;
+    private SmbSessionFactory smbSessionFactory;
 
-    public void uploadFile(File file) {
-        Message<File> message = MessageBuilder.withPayload(file)
-                .setHeader("remote-target-directory", "destino/diretorio")
-                .build();
 
-        smbOutputChannel.send(message);
+
+    public OutputStream downloadFile(String remoteFilePath) throws IOException {
+        SmbSession smbSession = smbSessionFactory.getSession();
+        OutputStream localOutputStream = new ByteArrayOutputStream();
+        smbSession.read(remoteFilePath,localOutputStream);
+        return localOutputStream;
     }
 
 }

@@ -3,11 +3,10 @@ package br.com.rocketdevelopment.jfilesyncserver.service;
 
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
 import java.security.MessageDigest;
 import java.util.List;
-import java.io.FileInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -244,4 +243,35 @@ public class FileManagerService {
             return stream.map(Path::toString).collect(Collectors.toList());
         }
     }
+
+    public void writeFileInputStream(String path, InputStream inputStream) throws IOException {
+        Path filePath = Paths.get(path);
+        if (!Files.exists(filePath)) {
+            Files.createDirectories(filePath.getParent());
+        }
+        Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+    }
+    public InputStream readFileInputStream(String path) throws IOException {
+        Path filePath = Paths.get(path);
+        if (!Files.exists(filePath)) {
+            throw new IOException("File not found");
+        }
+        return Files.newInputStream(filePath);
+    }
+    public InputStream convertOutputStreamToInputStream(OutputStream outputStream) throws IOException {
+        ByteArrayOutputStream baos = (ByteArrayOutputStream) outputStream;
+
+        return new ByteArrayInputStream(baos.toByteArray());
+    }
+    public OutputStream convertInputStreamToOutputStream(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = inputStream.read(buffer)) > -1 ) {
+            baos.write(buffer, 0, len);
+        }
+        baos.flush();
+        return baos;
+    }
+
 }

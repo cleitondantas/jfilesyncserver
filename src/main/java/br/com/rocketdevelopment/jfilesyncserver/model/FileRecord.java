@@ -5,11 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FileRecord {
+public class FileRecord extends FileItem{
     private Long id;
-    private String fileName;
-    private String filePath;
-    private String hash;
     private boolean isDeleted;
     public FileRecord() {
     }
