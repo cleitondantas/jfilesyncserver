@@ -2,6 +2,7 @@ package br.com.rocketdevelopment.jfilesyncserver.config;
 
 import jcifs.DialectVersion;
 import jcifs.smb.SmbFile;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import org.springframework.messaging.MessageHandler;
 import java.io.File;
 
 @Configuration
+@Getter
 public class SmbIntegrationConfig {
 
     @Value("${smb.host}")

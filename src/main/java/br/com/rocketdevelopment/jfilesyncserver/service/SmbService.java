@@ -23,5 +23,9 @@ public class SmbService {
         smbSession.read(remoteFilePath,localOutputStream);
         return localOutputStream;
     }
+    public void uploadFile(String remoteFilePath, InputStream inputStream) throws IOException {
+        SmbSession smbSession = smbSessionFactory.getSession();
+        smbSession.write(inputStream,remoteFilePath);
+    }
 
 }

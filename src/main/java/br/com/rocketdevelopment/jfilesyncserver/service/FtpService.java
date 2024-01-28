@@ -149,11 +149,12 @@ public class FtpService {
             System.out.println("The first file is uploaded successfully.");
         }
     }
-    public void deleteFile(String filePath) throws IOException {
+    public boolean deleteFile(String filePath) throws IOException {
         boolean deleted = ftpClient.deleteFile(filePath);
         if (deleted) {
             System.out.println("The file was deleted successfully.");
         }
+        return deleted;
     }
 
     public void createDirectory(String dirPath) throws IOException {

@@ -140,4 +140,6 @@ public class ApiController {
         }
         return ResponseEntity.ok(String.format("Arquivo deletado is  %s ",path));
     }
+
+
 }
