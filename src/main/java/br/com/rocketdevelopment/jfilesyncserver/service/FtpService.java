@@ -173,7 +173,7 @@ public class FtpService {
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            ftpClientDisconnect();
+//            ftpClientDisconnect();
         }
         return is;
     }
@@ -271,7 +271,7 @@ public class FtpService {
             ftpClient.setControlEncoding("UTF-8");
             // Configurações opcionais
             ftpClient.enterLocalPassiveMode(); // Modo passivo
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE); // Tipo de arquivo (binário é o mais comum para transferência de dados não-texto)
+            //ftpClient.setFileType(FTP.BINARY_FILE_TYPE); // Tipo de arquivo (binário é o mais comum para transferência de dados não-texto)
             ftpClient.setConnectTimeout(10000); // Timeout de conexão em milissegundos
         } catch (IOException ex) {
             ex.printStackTrace();

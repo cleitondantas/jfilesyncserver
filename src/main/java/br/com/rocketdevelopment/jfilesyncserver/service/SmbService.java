@@ -1,5 +1,6 @@
 package br.com.rocketdevelopment.jfilesyncserver.service;
 
+import jcifs.smb.SmbFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.smb.session.SmbSession;
 import org.springframework.integration.smb.session.SmbSessionFactory;

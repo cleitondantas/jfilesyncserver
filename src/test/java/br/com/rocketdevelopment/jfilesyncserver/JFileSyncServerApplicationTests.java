@@ -46,20 +46,20 @@ public class JFileSyncServerApplicationTests {
 	void fromSMBtoFtp() throws IOException {
 		OutputStream outputStream = smbService.downloadFile("saida/setting_v2.zip");
 		InputStream inputStream = fileManagerService.convertOutputStreamToInputStream(outputStream);
-		ftpService.writeFileInputStream("/files/entrada/setting_v2.zip",inputStream);
+		ftpService.writeFileInputStream("/entrada/setting_v2.zip",inputStream);
 	}
-//	@Test
-//	@Order(4)
-//	void deleteFtp() throws IOException {
-//		boolean delete = ftpService.deleteFile("/files/entrada/setting_v2.zip");
-//		Assertions.assertTrue(delete);
-//	}
+	@Test
+	@Order(4)
+	void deleteFtp() throws IOException {
+		boolean delete = ftpService.deleteFile("/files/entrada/setting_v2.zip");
+		Assertions.assertTrue(delete);
+	}
 
 	@Test
 	@Order(5)
 	public void fromFTPtoSMB() throws IOException {
-		InputStream inputStream = ftpService.readFTPInputStream("/files/entrada/setting_v2.zip");
-		smbService.uploadFile("entrada/setting_v3.zip",inputStream);
+		InputStream inputStream = ftpService.readFTPInputStream("/files/saida/setting_v2.zip");
+		smbService.uploadFile("entrada/setting_v2.zip",inputStream);
 
 	}
 //
