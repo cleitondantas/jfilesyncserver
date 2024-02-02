@@ -45,32 +45,45 @@ public class JFileSyncServerApplicationTests {
 	@Order(3)
 	void fromSMBtoFtp() throws IOException {
 		OutputStream outputStream = smbService.downloadFile("saida/setting_v2.zip");
+
 		InputStream inputStream = fileManagerService.convertOutputStreamToInputStream(outputStream);
+		ftpService.ftpClientConnect();
 		ftpService.writeFileInputStream("/entrada/setting_v2.zip",inputStream);
+		ftpService.ftpClientDisconnect();
 	}
 	@Test
 	@Order(4)
 	void deleteFtp() throws IOException {
+		ftpService.ftpClientConnect();
 		boolean delete = ftpService.deleteFile("/files/entrada/setting_v2.zip");
+		ftpService.ftpClientDisconnect();
 		Assertions.assertTrue(delete);
 	}
 
 	@Test
 	@Order(5)
 	public void fromFTPtoSMB() throws IOException {
+		ftpService.ftpClientConnect();
 		InputStream inputStream = ftpService.readFTPInputStream("/files/saida/setting_v2.zip");
+		ftpService.ftpClientDisconnect();
 		smbService.uploadFile("entrada/setting_v2.zip",inputStream);
 
 	}
-//
-//	@Test
-//	public void testCopyFileFTP() throws IOException {
-//		InputStream inputStream = ftpService.readFTPInputStream("/files/Bruna/Documents/Thiago1.pdf");
-//		fileManagerService.writeFileInputStream("C:\\Projetos\\Test\\Thiago1.pdf", inputStream);
-//	}
-//	@Test
-//	public void testCopyFileToFTP() throws IOException {
-//		InputStream inputStream1 = fileManagerService.readFileInputStream("C:\\Projetos\\Test\\Thiago1.pdf");
-//		ftpService.writeFileInputStream("/files/Bruna/Documents/Thiago2.pdf",inputStream1);
-//	}
+
+	@Test
+	@Order(6)
+	public void testCopyFileFTP() throws IOException {
+		ftpService.ftpClientConnect();
+		InputStream inputStream = ftpService.readFTPInputStream("/files/saida/setting_v2.zip");
+		fileManagerService.writeFileInputStream("C:\\Projetos\\Test\\setting_v2.zip", inputStream);
+		ftpService.ftpClientDisconnect();
+	}
+	@Test
+	@Order(7)
+	public void testCopyFileToFTP() throws IOException {
+		ftpService.ftpClientConnect();
+		InputStream inputStream1 = fileManagerService.readFileInputStream("C:\\Projetos\\Test\\setting_v2.zip");
+		ftpService.writeFileInputStream("/entrada/setting_v2.zip",inputStream1);
+		ftpService.ftpClientDisconnect();
+	}
 }

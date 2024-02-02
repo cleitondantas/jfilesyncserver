@@ -42,14 +42,11 @@ public class FtpService {
     public String[] getNameDirs(String diretorio) throws SocketException, IOException {
         String[] nameDirs = null;
         try {
-            ftpClientConnect();
             ftpClient.enterLocalPassiveMode();
             ftpClient.changeWorkingDirectory(diretorio);
             nameDirs = ftpClient.listNames();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            ftpClientDisconnect();
         }
         return nameDirs;
     }
@@ -66,7 +63,6 @@ public class FtpService {
      *
      * */
     public FTPFile[] getConfigFTPFiles(String diretorio) {
-        ftpClientConnect();
         FTPFile[] filesConfig = null;
         try {
             ftpClient.enterLocalPassiveMode();
@@ -74,8 +70,6 @@ public class FtpService {
             filesConfig = ftpClient.listFiles();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            ftpClientDisconnect();
         }
         return filesConfig;
     }
@@ -95,7 +89,6 @@ public class FtpService {
     public boolean sendFTPFile(String caminhoArquivo, String arquivo) throws IOException {
         FileInputStream arqEnviar = null;
         try {
-            ftpClientConnect();
             ftpClient.enterLocalPassiveMode();
             arqEnviar = new FileInputStream(caminhoArquivo);
             if (ftpClient.storeFile(arquivo, arqEnviar)) {
@@ -103,8 +96,6 @@ public class FtpService {
             }
         }catch(Exception e) {
             e.printStackTrace();
-        }finally {
-            ftpClientDisconnect();
         }
         return false;
     }
@@ -150,6 +141,7 @@ public class FtpService {
         }
     }
     public boolean deleteFile(String filePath) throws IOException {
+        ftpClientConnect();
         boolean deleted = ftpClient.deleteFile(filePath);
         if (deleted) {
             System.out.println("The file was deleted successfully.");
@@ -168,30 +160,29 @@ public class FtpService {
     public InputStream readFTPInputStream(String source){
         InputStream is = null;
         try {
-            ftpClientConnect();
+
             is = ftpClient.retrieveFileStream(source);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-//            ftpClientDisconnect();
         }
         return is;
     }
 
     public void writeFileInputStream(String destination,InputStream in){
         try {
-            ftpClientConnect();
+
             ftpClient.storeFile(destination, in);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
-            ftpClientDisconnect();
+
         }
     }
 
     public void copyAllFiles(String source, String destination) {
         try {
-            ftpClientConnect();
+
             FTPFile[] files = ftpClient.listFiles(source);
             for (FTPFile file : files) {
                 ftpClientConnect();
@@ -225,7 +216,7 @@ public class FtpService {
             System.out.println("Failed to list files in: " + source);
             e.printStackTrace();
         }
-        ftpClientDisconnect();
+
     }
 
 
